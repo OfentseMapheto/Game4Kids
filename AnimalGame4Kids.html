@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Guess the Animal Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    
+    h1 {
+      color: #333;
+    }
+    
+    .message {
+      margin-bottom: 20px;
+    }
+    
+    .options {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    
+    .option {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Guess the Animal Game</h1>
+  
+  <div class="message" id="message"></div>
+  
+  <img src="" alt="Animal Image" id="animal-image" style="display: none;">
+  
+  <div class="options">
+    <button class="option" onclick="checkAnswer(true)">Yes</button>
+    <button class="option" onclick="checkAnswer(false)">No</button>
+  </div>
+  
+  <script>
+    const animals = [
+      { name: 'Lion', image: 'lion.jpg', isMammal: true },
+      { name: 'Elephant', image: 'elephant.jpg', isMammal: true },
+      { name: 'Snake', image: 'snake.jpg', isMammal: false },
+      { name: 'Giraffe', image: 'giraffe.jpg', isMammal: true },
+      { name: 'Turtle', image: 'turtle.jpg', isMammal: false },
+    ];
+
+    let currentAnimalIndex = 0;
+
+    function startGame() {
+      currentAnimalIndex = 0;
+      displayAnimal();
+      displayMessage('');
+    }
+
+    function displayAnimal() {
+      const animalImage = document.getElementById('animal-image');
+      animalImage.src = animals[currentAnimalIndex].image;
+      animalImage.alt = animals[currentAnimalIndex].name;
+      animalImage.style.display = 'block';
+    }
+
+    function displayMessage(message) {
+      const messageElement = document.getElementById('message');
+      messageElement.textContent = message;
+    }
+
+    function checkAnswer(answer) {
+      const currentAnimal = animals[currentAnimalIndex];
+
+      if (answer === currentAnimal.isMammal) {
+        displayMessage('Correct! It is a mammal.');
+      } else {
+        displayMessage('Oops! It is not a mammal.');
+      }
+
+      currentAnimalIndex++;
+
+      if (currentAnimalIndex < animals.length) {
+        displayAnimal();
+      } else {
+        displayMessage('Game Over');
+        document.querySelector('.options').style.display = 'none';
+      }
+    }
+
+    window.onload = startGame;
+  </script>
+</body>
+</html>
